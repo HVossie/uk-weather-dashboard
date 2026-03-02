@@ -1,0 +1,6 @@
+.env
+*.json
+*.log
+.meltano/
+.meltano.db
+__pycache__/
