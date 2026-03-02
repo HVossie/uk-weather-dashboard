@@ -4,3 +4,4 @@
 .meltano/
 .meltano.db
 __pycache__/
+venv/
