@@ -4,4 +4,4 @@
 .meltano/
 .meltano.db
 __pycache__/
-venv/
+venv/service-account.json
