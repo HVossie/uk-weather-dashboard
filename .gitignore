@@ -1,7 +1,14 @@
 .env
-*.json
 *.log
+*.json
+
+# Meltano
 .meltano/
 .meltano.db
+
+# Python
 __pycache__/
-venv/service-account.json
+*.pyc
+
+# Virtual environment
+venv/
