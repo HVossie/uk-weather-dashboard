@@ -8,27 +8,106 @@ environments:
 
 plugins:
   extractors:
-    - name: tap-rest-api-msdk
-      variant: widen
-      pip_url: "tap-rest-api-msdk setuptools<82"
-      config:
-        api_url: https://api.open-meteo.com
+  - name: tap-rest-api-msdk
+    variant: widen
+    pip_url: tap-rest-api-msdk setuptools<82
+    config:
+      api_url: https://api.open-meteo.com
+      streams:
+      - name: open_meteo_london_current
+        path: /v1/forecast
+        params:
+          latitude: 51.5072
+          longitude: -0.1276
+          current_weather: true
+          timezone: Europe/London
+        records_path: $.current_weather
+        primary_keys: [time]
+      - name: open_meteo_manchester_current
+        path: /v1/forecast
+        params:
+          latitude: 53.4808
+          longitude: -2.2426
+          current_weather: true
+          timezone: Europe/London
+        records_path: $.current_weather
+        primary_keys: [time]
+      - name: open_meteo_glasgow_current
+        path: /v1/forecast
+        params:
+          latitude: 55.8642
+          longitude: -4.2518
+          current_weather: true
+          timezone: Europe/London
+        records_path: $.current_weather
+        primary_keys: [time]
+  - name: tap-weatherapi
+    inherit_from: tap-rest-api-msdk
+    config:
+      api_url: https://api.weatherapi.com
+      params: {}
+      streams:
+        - name: weatherapi_london_current
+          path: /v1/current.json
+          params:
+            key: "${WEATHERAPI_KEY}"
+            q: "London"
+            aqi: "no"
+          records_path: $
+          primary_keys: [location.name, location.localtime_epoch]
+        - name: weatherapi_manchester_current
+          path: /v1/current.json
+          params:
+            key: "${WEATHERAPI_KEY}"
+            q: "Manchester"
+            aqi: "no"
+          records_path: $
+          primary_keys: [location.name, location.localtime_epoch]
+        - name: weatherapi_glasgow_current
+          path: /v1/current.json
+          params:
+            key: "${WEATHERAPI_KEY}"
+            q: "Glasgow"
+            aqi: "no"
+          records_path: $
+          primary_keys: [location.name, location.localtime_epoch]
+  - name: tap-openweather
+    inherit_from: tap-rest-api-msdk
+    config:
+        api_url: https://api.openweathermap.org
+        params: {}
         streams:
-          - name: open_meteo_london_current
-            path: /v1/forecast
+          - name: openweather_london_current
+            path: /data/2.5/weather
             params:
-              latitude: 51.5072
-              longitude: -0.1276
-              current_weather: true
-              timezone: Europe/London
-            records_path: $.current_weather
-            primary_keys: [time]
+              q: "London,UK"
+              units: "metric"
+              appid: "${OPENWEATHER_API_KEY}"
+            records_path: $
+            primary_keys: [id, dt]
 
+          - name: openweather_manchester_current
+            path: /data/2.5/weather
+            params:
+              q: "Manchester,UK"
+              units: "metric"
+              appid: "${OPENWEATHER_API_KEY}"
+            records_path: $
+            primary_keys: [id, dt]
+
+          - name: openweather_glasgow_current
+            path: /data/2.5/weather
+            params:
+              q: "Glasgow,UK"
+              units: "metric"
+              appid: "${OPENWEATHER_API_KEY}"
+            records_path: $
+            primary_keys: [id, dt]
   loaders:
-    - name: target-bigquery
-      variant: z3z1ma
-      pip_url: "git+https://github.com/z3z1ma/target-bigquery.git setuptools<82"
-      config:
-        project: uk-weather-dashboard
-        dataset: weather_raw
-        location: EU
+  - name: target-bigquery
+    variant: z3z1ma
+    pip_url: git+https://github.com/z3z1ma/target-bigquery.git setuptools<82
+    config:
+      project: uk-weather-dashboard
+      dataset: weather_raw
+      location: EU
