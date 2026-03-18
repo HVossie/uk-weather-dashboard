@@ -34,10 +34,10 @@ The pipeline collects weather data for three UK cities:
 Weather APIs used:
 
 ### Open-Meteo
--Temperature
--Wind speed
--Weather code
--Observation time
+- Temperature
+- Wind speed
+- Weather code
+- Observation time
 
 ### OpenWeather
 - Temperature
