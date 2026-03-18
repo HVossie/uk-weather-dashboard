@@ -6,77 +6,52 @@ This project was built as a portfolio piece to practice data ingestion, ELT pipe
 
 ## Features
 
-Extract weather data from multiple APIs
-
-Load data into Google BigQuery
-
-Compare weather readings across providers
-
-Unified SQL view for analytics
-
-Dashboard visualization in Looker Studio
-
-Meltano-managed ELT pipeline
-
-Structured project layout for analytics workflows
+- Extract weather data from multiple APIs
+- Load data into Google BigQuery
+- Compare weather readings across providers
+- Unified SQL view for analytics
+- Dashboard visualization in Looker Studio
+- Meltano-managed ELT pipeline
+- Structured project layout for analytics workflows
 
 ## Tech Stack
 
-Python 3
-
-Meltano
-
-Singer Taps
-
-Google BigQuery
-
-Looker Studio
-
-Git / GitHub
+- Python 3
+- Meltano
+- Singer Taps
+- Google BigQuery
+- Looker Studio
+- Git / GitHub
 
 ## Data Sources
 
 The pipeline collects weather data for three UK cities:
 
-London
-
-Manchester
-
-Glasgow
+- London
+- Manchester
+- Glasgow
 
 Weather APIs used:
 
-Open-Meteo
+### Open-Meteo
+-Temperature
+-Wind speed
+-Weather code
+-Observation time
 
-Temperature
+### OpenWeather
+- Temperature
+- Humidity
+- Pressure
+- Wind speed
 
-Wind speed
 
-Weather code
-
-Observation time
-
-OpenWeather
-
-Temperature
-
-Humidity
-
-Pressure
-
-Wind speed
-
-WeatherAPI
-
-Temperature
-
-Feels-like temperature
-
-Wind speed
-
-Visibility
-
-Humidity
+### WeatherAPI
+- Temperature
+- Feels-like temperature
+- Wind speed
+- Visibility
+- Humidity
 
 Using multiple providers allows comparison of readings across APIs.
 
@@ -130,31 +105,32 @@ uk-weather-dashboard/
 
 ## What I Learned
 
-Building ELT pipelines using Meltano
-
-Integrating multiple third-party APIs
-
-Loading data into Google BigQuery
-
-Structuring raw vs analytics datasets
-
-Writing SQL transformations for unified datasets
-
-Designing dashboards in Looker Studio
-
-Managing a data project with Git and GitHub
+- Building ELT pipelines using Meltano
+- Integrating multiple third-party APIs
+- Loading data into Google BigQuery
+- Structuring raw vs analytics datasets
+- Writing SQL transformations for unified datasets
+- Designing dashboards in Looker Studio
+- Managing a data project with Git and GitHub
 
 ## Possible Improvements
 
-Add historical weather tracking
+- Add historical weather tracking
+- Schedule pipeline runs automatically
+- Add data validation checks
+- Extend to additional cities or APIs
+- Implement automated testing for data quality
 
-Schedule pipeline runs automatically
+## Dashboard Preview
 
-Add data validation checks
+### Overview
+![Overview](screenshots/dashboard_overview.png)
 
-Extend to additional cities or APIs
+### Temperature Comparison by City and API
+![Temperature Comparison](screenshots/temperature_comparison.png)
 
-Implement automated testing for data quality
+### Raw Weather Data Table
+![Weather Table](screenshots/weather_table.png)
 
 ## Author
 Hanroux
