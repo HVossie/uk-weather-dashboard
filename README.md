@@ -4,6 +4,10 @@ End-to-end data pipeline that collects weather data from multiple APIs, loads it
 
 This project was built as a portfolio piece to practice data ingestion, ELT pipeline design, cloud data warehousing, and dashboard analytics. It demonstrates how multiple external APIs can be combined into a unified dataset for analysis and visualization.
 
+## Live Dashboard
+
+[View Dashboard](https://lookerstudio.google.com/s/vhWFYjagW2E)
+
 ## Features
 
 - Extract weather data from multiple APIs
