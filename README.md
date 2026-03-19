@@ -93,13 +93,18 @@ WEATHERAPI_KEY=your_api_key_here
 ## Project Structure
 ```
 uk-weather-dashboard/
+├── .github/
+│   └── workflows/
+│       └── daily-weather-pipeline.yml   # Scheduled pipeline (GitHub Actions)
+│
 ├── analyze/        # Analytical queries
 ├── extract/        # Data extraction logic
 ├── load/           # Data loading processes
-├── transform/      # SQL transformations and views
+├── transform/      # SQL transformations and analytical layer
 ├── notebook/       # Exploration notebooks
 ├── orchestrate/    # Pipeline orchestration configs
 ├── output/         # Generated outputs
+├── screenshots/    # Dashboard images for README
 │
 ├── meltano.yml     # Meltano pipeline configuration
 ├── requirements.txt
