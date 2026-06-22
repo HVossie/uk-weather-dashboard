@@ -1,8 +1,8 @@
 # UK Weather Data Pipeline
 
-End-to-end data pipeline that collects weather data from multiple APIs, loads it into Google BigQuery, and visualizes the results in Looker Studio.
+End-to-end data pipeline that collects current weather data from multiple APIs, loads it into Google BigQuery, and visualizes the results in Looker Studio.
 
-This project was built as a portfolio piece to practice data ingestion, ELT pipeline design, cloud data warehousing, and dashboard analytics. It demonstrates how multiple external APIs can be combined into a unified dataset for analysis and visualization.
+This project was built to practice ELT pipeline design, cloud data warehousing, SQL transformation, and dashboard analytics in a small but complete analytics workflow.
 
 ## Live Dashboard
 
@@ -11,35 +11,36 @@ This project was built as a portfolio piece to practice data ingestion, ELT pipe
 ## Features
 
 - Extract weather data from multiple APIs
-- Load data into Google BigQuery
-- Compare weather readings across providers
-- Unified SQL view for analytics
-- Dashboard visualization in Looker Studio
-- Meltano-managed ELT pipeline
-- Structured project layout for analytics workflows
+- Load raw records into Google BigQuery
+- Transform source data into unified reporting views
+- Compare weather readings across providers and cities
+- Visualize results in Looker Studio
+- Run ingestion with a Meltano-managed pipeline
+- Schedule automated pipeline runs with GitHub Actions
 
 ## Tech Stack
 
 - Python 3
 - Meltano
-- Singer Taps
+- Singer taps and target
 - Google BigQuery
 - Looker Studio
-- Git / GitHub
+- GitHub Actions
 
 ## Data Sources
 
-The pipeline collects weather data for three UK cities:
+The pipeline collects current weather data for:
 
 - London
 - Manchester
 - Glasgow
 
-Weather APIs used:
+Weather providers used:
 
 ### Open-Meteo
 - Temperature
 - Wind speed
+- Wind direction
 - Weather code
 - Observation time
 
@@ -48,7 +49,7 @@ Weather APIs used:
 - Humidity
 - Pressure
 - Wind speed
-
+- Weather description
 
 ### WeatherAPI
 - Temperature
@@ -56,79 +57,93 @@ Weather APIs used:
 - Wind speed
 - Visibility
 - Humidity
+- Condition text
 
-Using multiple providers allows comparison of readings across APIs.
+Using multiple providers allows the dashboard to compare readings across APIs for the same cities.
 
 ## How to Run
 
-Clone the repository
-```
-git clone https://github.com/YOUR_USERNAME/uk-weather-dashboard.git
+1. Clone the repository
+
+```bash
+git clone https://github.com/HVossie/uk-weather-dashboard.git
 ```
 
-Navigate into the project
-```
+2. Navigate into the project
+
+```bash
 cd uk-weather-dashboard
 ```
 
-Install dependencies
-```
-pip install -r requirements.txt
+3. Install dependencies
+
+```bash
+pip install meltano
 ```
 
-Run the Meltano pipeline
-```
-meltano run tap-rest-api-msdk target-bigquery
+4. Install Meltano plugins
+
+```bash
+meltano install
 ```
 
-## Environment Variables
-Create a .env file with your API keys.
+5. Create a `.env` file with your API keys
 
-Example:
-```
+```env
 OPENWEATHER_API_KEY=your_api_key_here
 WEATHERAPI_KEY=your_api_key_here
 ```
 
-## Project Structure
+6. Authenticate with Google Cloud for BigQuery access
+
+7. Run the pipelines
+
+```bash
+meltano run tap-rest-api-msdk target-bigquery
+meltano run tap-openweather target-bigquery
+meltano run tap-weatherapi target-bigquery
 ```
+
+## Project Structure
+
+```text
 uk-weather-dashboard/
-├── .github/
-│   └── workflows/
-│       └── daily-weather-pipeline.yml   # Scheduled pipeline (GitHub Actions)
-│
-├── analyze/        # Analytical queries
-├── extract/        # Data extraction logic
-├── load/           # Data loading processes
-├── transform/      # SQL transformations and analytical layer
-├── notebook/       # Exploration notebooks
-├── orchestrate/    # Pipeline orchestration configs
-├── output/         # Generated outputs
-├── screenshots/    # Dashboard images for README
-│
-├── meltano.yml     # Meltano pipeline configuration
-├── requirements.txt
-├── README.md
-└── .gitignore
+|-- .github/
+|   `-- workflows/
+|       `-- daily-weather-pipeline.yml   # Scheduled GitHub Actions pipeline
+|-- analyze/                             # Analysis placeholders and queries
+|-- extract/                             # Extraction-related workspace
+|-- load/                                # Loading-related workspace
+|-- notebook/                            # Exploration notebooks
+|-- orchestrate/                         # Orchestration-related workspace
+|-- output/                              # Generated outputs
+|-- screenshots/                         # Dashboard images for the README
+|-- transform/                           # BigQuery SQL transformation views
+|   |-- current_weather_uk.sql
+|   |-- latest_weather_by_city.sql
+|   `-- open_meteo_current_uk.sql
+|-- meltano.yml                          # Meltano extractor and loader config
+|-- requirements.txt
+|-- README.md
+`-- .gitignore
 ```
 
 ## What I Learned
 
-- Building ELT pipelines using Meltano
-- Integrating multiple third-party APIs
-- Loading data into Google BigQuery
-- Structuring raw vs analytics datasets
-- Writing SQL transformations for unified datasets
+- Building ELT pipelines with Meltano
+- Integrating multiple third-party APIs into one workflow
+- Loading raw source data into Google BigQuery
+- Writing SQL views for a unified analytics layer
 - Designing dashboards in Looker Studio
-- Managing a data project with Git and GitHub
+- Automating scheduled data runs with GitHub Actions
 
 ## Possible Improvements
 
-- Add historical weather tracking
-- Schedule pipeline runs automatically
-- Add data validation checks
-- Extend to additional cities or APIs
-- Implement automated testing for data quality
+- Add historical weather tracking over time
+- Add data quality checks and validation steps
+- Expand to more UK cities or additional weather APIs
+- Add tests around SQL transformations or pipeline outputs
+- Improve setup automation for local development
 
 ## Dashboard Preview
 
@@ -142,4 +157,5 @@ uk-weather-dashboard/
 ![Weather Table](screenshots/weather_table.png)
 
 ## Author
-Hanroux
+
+- Hanroux Vos
